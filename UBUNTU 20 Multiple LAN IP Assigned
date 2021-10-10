@@ -1,0 +1,17 @@
+root@controller1:~# vim /etc/netplan/00-installer-config.yaml
+network:
+  ethernets:
+    ens3:
+      dhcp4: no
+      addresses: [192.168.101.161/21]
+      gateway4: 192.168.100.33
+      nameservers:
+        addresses: [8.8.8.8]
+
+    ens8:
+      addresses: [192.168.50.11/24]
+    ens9:
+      addresses: [192.168.60.11/24]
+    ens10:
+      addresses: [192.168.70.11/24]
+  version: 2
