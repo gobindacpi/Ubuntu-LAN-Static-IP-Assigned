@@ -1,17 +1,65 @@
-root@controller1:~# vim /etc/netplan/00-installer-config.yaml
+root@compute1:/etc# cat /etc/netplan/00-installer-config.yaml 
+# This is the network config written by 'subiquity'
 network:
   ethernets:
     ens3:
-      dhcp4: no
-      addresses: [192.168.101.161/21]
+      addresses:
+      - 192.168.101.170/21
       gateway4: 192.168.100.33
       nameservers:
-        addresses: [8.8.8.8]
+        addresses:
+        - 8.8.8.8
 
+            #ports:
+            #   - []
     ens8:
-      addresses: [192.168.50.11/24]
+            addresses: [192.168.50.41/24]
+            mtu: 1450
     ens9:
-      addresses: [192.168.60.11/24]
+            addresses: [192.168.60.41/24]
+            mtu: 1450
     ens10:
-      addresses: [192.168.70.11/24]
+            addresses: [192.168.70.41/24]
+            mtu: 1450
+    ens11:
+            mtu: 1450
+
+    ens12:
+            mtu: 1450
+  vlans:
+      vlan80:
+        id: 80
+        link: ens11
+        addresses: [192.168.80.41/24]
+
+
+
   version: 2
+
+
+
+UBUNTU 20.4 Static IP assigned 
+*****************************************
+managed by Network Manager
+
+cat /etc/netplan/01-network-manager-all.yaml
+# Let NetworkManager manage all devices on this system
+network:
+  renderer: NetworkManager
+  ethernets:
+    ens4:
+      dhcp4: no
+  vlans:
+    vlan20:
+      id: 20
+      link: ens4
+      addresses: [192.168.20.92/24]
+  version: 2
+
+Generate the required configuration for the renderers.
+
+#netplan generate
+
+Apply all configuration and restart renderers.
+
+#netplan apply
